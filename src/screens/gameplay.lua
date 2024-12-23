@@ -17,6 +17,7 @@ end
 function GameplayScreen:draw_kids(gameplay)
   for kid in all(gameplay.kids) do
     Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, true)
+    Draw:draw_sprite(kid:get_gift_sprite(), kid.character.x + 4, kid.character.y - Draw:get_offset(3), 2, 2, true)
   end
 end
 
