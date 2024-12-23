@@ -5,7 +5,7 @@ function Kid:new()
 
   obj.character = Character:new(
     128,
-    Draw:get_offset(12),
+    Draw:get_offset(11),
     2,
     2,
     { idle = { 0, 2, 4 } },
