@@ -15,10 +15,10 @@ end
 
 function GameplayScreen:draw_kids(gameplay)
   for kid in all(gameplay.kids) do
-    Draw:draw_sprite(kid:get_current_sprite(), kid.x, kid.y, kid.w, kid.h, true)
+    Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, true)
   end
 end
 
 function GameplayScreen:draw_santa(gameplay)
-  Draw:draw_sprite(gameplay.santa:get_current_sprite(), gameplay.santa.x, gameplay.santa.y, gameplay.santa.w, gameplay.santa.h)
+  Draw:draw_sprite(gameplay.santa.character:get_current_sprite(), gameplay.santa.character.x, gameplay.santa.character.y, gameplay.santa.character.w, gameplay.santa.character.h)
 end

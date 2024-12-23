@@ -1,6 +1,6 @@
 Character = Base:new()
 
-function Character:new(x, y, w, h, health, sprites, animation_speed)
+function Character:new(x, y, w, h, sprites, animation_speed)
   local obj = Base.new(self)
 
   obj.animation_speed = animation_speed
@@ -8,7 +8,6 @@ function Character:new(x, y, w, h, health, sprites, animation_speed)
   obj.current_sprite_index = 1
   obj.frames = 0
   obj.h = h
-  obj.health = health
   obj.sprites = sprites
   obj.w = w
   obj.x = x
@@ -31,8 +30,4 @@ end
 
 function Character:get_current_sprite()
   return self.sprites[self.current_action][self.current_sprite_index]
-end
-
-function Character:move(x)
-  self.x += x
 end

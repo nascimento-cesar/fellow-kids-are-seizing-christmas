@@ -3,7 +3,9 @@ version 42
 __lua__
 #include classes/base.lua
 #include classes/character.lua
+#include classes/kid.lua
 #include classes/game.lua
+#include classes/santa.lua
 #include classes/gameplay.lua
 #include screens/gameplay.lua
 #include screens/game_over.lua
