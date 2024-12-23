@@ -16,10 +16,6 @@ function Character:new(x, y, w, h, sprites, animation_speed)
   return obj
 end
 
-function Character:get_current_sprite()
-  return self.sprites[self.current_action][self.current_sprite_index]
-end
-
 function Character:update()
   self.frames += 1
 
@@ -30,4 +26,12 @@ function Character:update()
       self.current_sprite_index = 1
     end
   end
+end
+
+function Character:get_current_sprite()
+  return self.sprites[self.current_action][self.current_sprite_index]
+end
+
+function Character:move(x)
+  self.x += x
 end
