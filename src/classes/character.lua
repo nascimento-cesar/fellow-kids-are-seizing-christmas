@@ -31,3 +31,7 @@ end
 function Character:get_current_sprite()
   return self.sprites[self.current_action][self.current_sprite_index]
 end
+
+function Character:set_action(action)
+  self.current_action = action
+end

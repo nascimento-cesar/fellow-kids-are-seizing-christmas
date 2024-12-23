@@ -8,18 +8,17 @@ function Kid:new()
     Draw:get_offset(11),
     2,
     2,
-    { idle = { 0, 2, 4 } },
+    { idle = { 0, 2, 4 }, evil = { 74, 76, 78 } },
     4
   )
   obj.gift_index = ceil(rnd(4))
-  obj.is_evil_mode = false
 
   return obj
 end
 
 function Kid:update(x)
   self.character:update()
-  self.character.x += -1
+  self.character.x += self.character.current_action == "evil" and -2 or -1
 end
 
 function Kid:get_gift_sprite()

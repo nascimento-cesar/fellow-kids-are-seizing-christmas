@@ -42,8 +42,11 @@ function Gameplay:check_collision()
 end
 
 function Gameplay:process_inputs()
-  local next_kid = self.kids[1]
-  local is_correct_key = nil
+  local next_kid, is_correct_key = self.kids[1]
+
+  if not next_kid then
+    return
+  end
 
   if btnp(⬅️) then
     is_correct_key = next_kid.gift_index == 1
@@ -59,7 +62,7 @@ function Gameplay:process_inputs()
     if is_correct_key then
       del(self.kids, next_kid)
     else
-      next_kid.is_evil_mode = true
+      next_kid.character:set_action("evil")
     end
   end
 end
