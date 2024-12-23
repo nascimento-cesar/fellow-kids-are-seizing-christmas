@@ -7,10 +7,11 @@ function Gameplay:new(on_game_over)
   obj.kids = {}
   obj.on_game_over = on_game_over
   obj.santa = Character:new(
-    0,
+    Draw:get_offset(),
     Draw:get_offset(10),
     4,
     4,
+    5,
     { idle = { 192, 196 }, throwing = { 200, 204 } },
     10
   )
@@ -40,6 +41,7 @@ function Gameplay:spawn_kids()
         Draw:get_offset(12),
         2,
         2,
+        1,
         { idle = { 0, 2, 4 } },
         4
       )
