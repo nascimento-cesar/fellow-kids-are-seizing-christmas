@@ -25,6 +25,7 @@ function Gameplay:update()
   self:spawn_kids()
   self:update_kids()
   self:check_collision()
+  self:process_inputs()
 end
 
 function Gameplay:check_collision()
@@ -36,6 +37,29 @@ function Gameplay:check_collision()
       if self.santa.health == 0 then
         self.on_game_over()
       end
+    end
+  end
+end
+
+function Gameplay:process_inputs()
+  local next_kid = self.kids[1]
+  local is_correct_key = nil
+
+  if btnp(⬅️) then
+    is_correct_key = next_kid.gift_index == 1
+  elseif btnp(➡️) then
+    is_correct_key = next_kid.gift_index == 2
+  elseif btnp(⬆️) then
+    is_correct_key = next_kid.gift_index == 3
+  elseif btnp(⬇️) then
+    is_correct_key = next_kid.gift_index == 4
+  end
+
+  if is_correct_key ~= nil then
+    if is_correct_key then
+      del(self.kids, next_kid)
+    else
+      next_kid.is_evil_mode = true
     end
   end
 end

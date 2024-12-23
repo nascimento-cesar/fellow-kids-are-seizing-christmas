@@ -12,6 +12,7 @@ function Kid:new()
     4
   )
   obj.gift_index = ceil(rnd(4))
+  obj.is_evil_mode = false
 
   return obj
 end
