@@ -4,17 +4,12 @@ function Gameplay:new(on_game_over)
   local obj = Base.new(self)
 
   obj.frames = 0
+  obj.gifts = {}
   obj.kids = {}
+  obj.happy_kids = {}
   obj.score = 0
   obj.on_game_over = on_game_over
-  obj.santa = Santa:new(Character:new(
-    Draw:get_offset(),
-    Draw:get_offset(9),
-    4,
-    4,
-    { idle = { 192, 196 }, throwing = { 200, 204 } },
-    10
-  ))
+  obj.santa = Santa:new()
 
   return obj
 end
@@ -24,6 +19,7 @@ function Gameplay:update()
   self.santa:update()
   self:spawn_kids()
   self:update_kids()
+  self:update_gifts()
   self:check_collision()
   self:process_inputs()
 end
@@ -60,9 +56,13 @@ function Gameplay:process_inputs()
 
   if is_correct_key ~= nil then
     if is_correct_key then
+      next_kid.character:set_action("happy")
+      add(self.gifts, { gift_index = next_kid.gift_index, x = self.santa.character.x, y = self.santa.character.y })
+      add(self.happy_kids, next_kid)
       del(self.kids, next_kid)
     else
-      next_kid.character:set_action("evil")
+      next_kid.character:set_action("possessed")
+      -- self.santa.character:set_action("frightened")
     end
   end
 end
@@ -73,8 +73,18 @@ function Gameplay:spawn_kids()
   end
 end
 
+function Gameplay:update_gifts()
+  for gift in all(self.gifts) do
+    gift.x += 3
+  end
+end
+
 function Gameplay:update_kids()
   for kid in all(self.kids) do
+    kid:update()
+  end
+
+  for kid in all(self.happy_kids) do
     kid:update()
   end
 end

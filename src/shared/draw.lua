@@ -18,6 +18,10 @@ function Draw:get_blinking_color(color_1, color_2)
   return flr(sin(time() / 0.25)) == 0 and (color_1 or 7) or (color_2 or 5)
 end
 
+function Draw:get_gift_sprite(gift_index)
+  return ({ 96, 98, 100, 102 })[gift_index]
+end
+
 function Draw:get_h_center(text)
   return 64 - (text and #tostr(text) or 0) * 2
 end

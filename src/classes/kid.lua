@@ -8,7 +8,7 @@ function Kid:new()
     Draw:get_offset(11),
     2,
     2,
-    { idle = { 0, 2, 4 }, evil = { 74, 76, 78 } },
+    { happy = { 74, 76, 78 }, idle = { 0, 2, 4 }, possessed = { 74, 76, 78 } },
     4
   )
   obj.gift_index = ceil(rnd(4))
@@ -16,11 +16,14 @@ function Kid:new()
   return obj
 end
 
-function Kid:update(x)
+function Kid:update()
   self.character:update()
-  self.character.x += self.character.current_action == "evil" and -2 or -1
-end
 
-function Kid:get_gift_sprite()
-  return ({ 96, 98, 100, 102 })[self.gift_index]
+  if self.character.current_action == "happy" then
+    self.character.x += 1
+  elseif self.character.current_action == "idle" then
+    self.character.x += -1
+  elseif self.character.current_action == "possessed" then
+    self.character.x += -2
+  end
 end
