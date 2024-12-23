@@ -1,6 +1,10 @@
 GameplayScreen = {}
 
 function GameplayScreen:draw(gameplay)
-  cls(2)
-  Draw:print_text_bouncy("gameplay screen", Draw:get_offset(), Draw:get_offset(), { 7, 6 }, 0)
+  Draw:draw_map()
+  self:draw_santa(gameplay)
+end
+
+function GameplayScreen:draw_santa(gameplay)
+  Draw:draw_sprite(gameplay.santa:get_current_sprite(), gameplay.santa.x, gameplay.santa.y, gameplay.santa.w, gameplay.santa.h)
 end

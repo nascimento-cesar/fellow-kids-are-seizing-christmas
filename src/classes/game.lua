@@ -4,7 +4,6 @@ function Game:new()
   local obj = Base.new(self)
 
   obj.current_mode = "start"
-  obj.frames = 1
   obj.gameplay = nil
   obj.gameplay_history = {}
 
@@ -19,8 +18,6 @@ function Game:update()
   elseif self.current_mode == "game_over" then
     self:on_game_over()
   end
-
-  self.frames += 1
 end
 
 function Game:on_start()
