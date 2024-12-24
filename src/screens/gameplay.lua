@@ -4,19 +4,11 @@ function GameplayScreen:draw(gameplay)
   Draw:draw_map()
   self:draw_health(gameplay)
   self:draw_score(gameplay)
-  self:draw_arrows()
   self:draw_gifts(gameplay)
   self:draw_santa(gameplay)
   self:draw_kids(gameplay.kids)
-  self:draw_kids(gameplay.gifted_kids)
+  self:draw_kids(gameplay.gifted_kids, true)
   self:draw_next_gift(gameplay)
-end
-
-function GameplayScreen:draw_arrows(gameplay)
-  Draw:print_text("⬅️", Draw:get_offset(10), Draw:get_offset(2) + 1, btn(⬅️) and 7 or 4, 0)
-  Draw:print_text("⬇️", Draw:get_offset(11) + 2, Draw:get_offset(2) + 1, btn(⬇️) and 7 or 3, 0)
-  Draw:print_text("➡️", Draw:get_offset(12) + 4, Draw:get_offset(2) + 1, btn(➡️) and 7 or 8, 0)
-  Draw:print_text("⬆️", Draw:get_offset(11) + 2, Draw:get_offset(), btn(⬆️) and 7 or 10, 0)
 end
 
 function GameplayScreen:draw_gifts(gameplay)
@@ -27,11 +19,11 @@ end
 
 function GameplayScreen:draw_health(gameplay)
   for i = 1, gameplay.santa.health do
-    Draw:draw_sprite(104, Draw:get_offset(5) + (i - 1) * 12, Draw:get_offset(14))
+    Draw:draw_sprite(104, Draw:get_offset(9) + (i - 1) * 10, Draw:get_offset(1))
   end
 end
 
-function GameplayScreen:draw_kids(kids)
+function GameplayScreen:draw_kids(kids, draw_hearts)
   for kid in all(kids) do
     pal(4, kid.appearance.hair_color)
     pal(11, kid.appearance.shirt_color)
@@ -39,6 +31,10 @@ function GameplayScreen:draw_kids(kids)
     pal(15, kid.appearance.skin_color)
     Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, kid.character.action ~= "happy")
     pal()
+
+    if draw_hearts and kid.character.action == "happy" then
+      Draw:draw_sprite(105, kid.character.x + 2, kid.character.y - 6)
+    end
   end
 end
 
@@ -46,7 +42,15 @@ function GameplayScreen:draw_next_gift(gameplay)
   local next_kid = gameplay.kids[1]
 
   if next_kid then
-    Draw:draw_sprite(Draw:get_gift_sprite(next_kid.gift_index), 40, 40, 2, 2)
+    local gift_params = ({
+      { "⬅️", 4 },
+      { "➡️", 8 },
+      { "⬆️", 10 },
+      { "⬇️", 3 }
+    })[next_kid.gift_index]
+
+    Draw:draw_sprite(Draw:get_gift_sprite(next_kid.gift_index), next_kid.character.x - 6, gameplay.santa.character.y - 4, 2, 2)
+    Draw:print_text(gift_params[1], next_kid.character.x + 12, gameplay.santa.character.y + 4, gift_params[2], 0)
   end
 end
 

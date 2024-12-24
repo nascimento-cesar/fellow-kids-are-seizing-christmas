@@ -1,7 +1,7 @@
 GameOverScreen = {}
 
 function GameOverScreen:draw(game)
-  local text_1, text_2, text_3, text_4 = "game over", "presented kids: " .. game.gameplay.score, "new high score!", "press ❎ or 🅾️ to try again"
+  local text_1, text_2, text_3, text_4 = "game over", "gifted kids: " .. game.gameplay.score, "new high score!", "press ❎ or 🅾️ to try again"
   cls(3)
   Draw:print_text_bouncy(text_1, Draw:get_h_center(text_1), Draw:get_offset(3), 7, 0)
   Draw:print_text(text_2, Draw:get_h_center(text_2), Draw:get_offset(5), { 7, 11 }, 0)

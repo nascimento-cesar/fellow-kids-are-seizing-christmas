@@ -37,6 +37,10 @@ function Gameplay:check_collision()
   end
 end
 
+function Gameplay:increase_score()
+  self.score += 1
+end
+
 function Gameplay:process_inputs()
   local next_kid, is_correct_key = self.kids[1]
 
@@ -56,7 +60,6 @@ function Gameplay:process_inputs()
 
   if is_correct_key ~= nil then
     if is_correct_key then
-      self.score += 1
       self.santa.character:set_action("throwing")
       next_kid.character:set_action(next_kid.character.action == "possessed" and "before_happy_possessed" or "before_happy")
       add(
@@ -69,6 +72,7 @@ function Gameplay:process_inputs()
       )
       add(self.gifted_kids, next_kid)
       del(self.kids, next_kid)
+      self:increase_score()
     else
       next_kid.character:set_action("possessed")
       self.santa.character:set_action("frightened")
@@ -77,7 +81,9 @@ function Gameplay:process_inputs()
 end
 
 function Gameplay:spawn_kids()
-  if self.frames % 30 == 0 then
+  local difficulty_mod = min(ceil(self.score / 5), 15)
+
+  if self.frames % (30 - difficulty_mod) == 0 then
     add(self.kids, Kid:new())
   end
 end
