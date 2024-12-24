@@ -1,15 +1,14 @@
 Character = Base:new()
 
-function Character:new(x, y, w, h, sprites, animation_speed)
+function Character:new(x, y, w, h, actions)
   local obj = Base.new(self)
 
   obj.action = "idle"
   obj.action_cycles = 0
-  obj.animation_speed = animation_speed
+  obj.actions = actions
   obj.current_sprite_index = 1
   obj.frames = 0
   obj.h = h
-  obj.sprites = sprites
   obj.w = w
   obj.x = x
   obj.y = y
@@ -20,10 +19,10 @@ end
 function Character:update()
   self.frames += 1
 
-  if self.frames % self.animation_speed == 0 then
+  if self.frames % self.actions[self.action].speed == 0 then
     self.current_sprite_index += 1
 
-    if self.current_sprite_index > #self.sprites[self.action] then
+    if self.current_sprite_index > #self.actions[self.action].sprites then
       self.current_sprite_index = 1
       self.action_cycles += 1
     end
@@ -31,7 +30,7 @@ function Character:update()
 end
 
 function Character:get_current_sprite()
-  return self.sprites[self.action][self.current_sprite_index]
+  return self.actions[self.action].sprites[self.current_sprite_index]
 end
 
 function Character:set_action(action)

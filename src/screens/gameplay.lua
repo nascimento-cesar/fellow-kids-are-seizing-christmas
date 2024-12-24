@@ -51,7 +51,8 @@ function GameplayScreen:draw_next_gift(gameplay)
 end
 
 function GameplayScreen:draw_santa(gameplay)
-  Draw:draw_sprite(gameplay.santa.character:get_current_sprite(), gameplay.santa.character.x, gameplay.santa.character.y, gameplay.santa.character.w, gameplay.santa.character.h)
+  local is_frightened = gameplay.santa.character.action == "frightened"
+  Draw:draw_sprite(gameplay.santa.character:get_current_sprite(), gameplay.santa.character.x - (is_frightened and 6 or 0), gameplay.santa.character.y, gameplay.santa.character.w, gameplay.santa.character.h)
 end
 
 function GameplayScreen:draw_score(gameplay)

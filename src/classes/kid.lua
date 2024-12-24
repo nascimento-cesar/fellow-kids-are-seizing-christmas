@@ -10,10 +10,11 @@ function Kid:new()
     2,
     2,
     {
-      before_happy = obj.appearance.sprites,
-      happy = obj.appearance.sprites,
-      idle = obj.appearance.sprites,
-      possessed = { 74, 76, 78 }
+      before_happy = { speed = 4, sprites = obj.appearance.sprites },
+      before_happy_possessed = { speed = 4, sprites = { 74, 76, 78 } },
+      happy = { speed = 2, sprites = obj.appearance.sprites },
+      idle = { speed = 4, sprites = obj.appearance.sprites },
+      possessed = { speed = 2, sprites = { 74, 76, 78 } }
     },
     4
   )
@@ -51,7 +52,7 @@ function Kid:update()
     self.character.x += -1
   elseif self.character.action == "happy" then
     self.character.x += 3
-  elseif self.character.action == "before_happy" then
+  elseif self.character.action == "before_happy" or self.character.action == "before_happy_possessed" then
     self.character.x += -1
   elseif self.character.action == "possessed" then
     self.character.x += -2.5

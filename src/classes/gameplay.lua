@@ -40,7 +40,7 @@ end
 function Gameplay:process_inputs()
   local next_kid, is_correct_key = self.kids[1]
 
-  if not next_kid then
+  if not next_kid or self.santa.character.action == "frightened" then
     return
   end
 
@@ -57,7 +57,7 @@ function Gameplay:process_inputs()
   if is_correct_key ~= nil then
     if is_correct_key then
       self.santa.character:set_action("throwing")
-      next_kid.character:set_action("before_happy")
+      next_kid.character:set_action(next_kid.character.action == "possessed" and "before_happy_possessed" or "before_happy")
       add(
         self.gifts, {
           frames = 0,
@@ -70,7 +70,7 @@ function Gameplay:process_inputs()
       del(self.kids, next_kid)
     else
       next_kid.character:set_action("possessed")
-      -- self.santa.character:set_action("frightened")
+      self.santa.character:set_action("frightened")
     end
   end
 end
@@ -89,7 +89,6 @@ function Gameplay:update_gifts()
       gift.x += 3
 
       if gift.kid.character.x < gift.x and gift.kid.character.action ~= "happy" then
-        gift.kid.character.animation_speed = 2
         gift.kid.character:set_action("happy")
       end
     end
