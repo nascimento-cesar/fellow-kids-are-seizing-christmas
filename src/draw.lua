@@ -2,7 +2,7 @@ function _draw()
   cls()
 
   if game.current_mode == "start" then
-    StartScreen:draw()
+    StartScreen:draw(game)
   elseif game.current_mode == "gameplay" then
     GameplayScreen:draw(game.gameplay)
   elseif game.current_mode == "game_over" then

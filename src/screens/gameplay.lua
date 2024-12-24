@@ -22,20 +22,18 @@ function GameplayScreen:draw_gifts(gameplay)
   end
 end
 
-function GameplayScreen:draw_kids(kids)
+function GameplayScreen:draw_kids(kids, hide_gift_requests)
   for kid in all(kids) do
-    local is_happy = kid.character.action == "happy"
-
     pal(4, kid.appearance.hair_color)
     pal(11, kid.appearance.shirt_color)
     pal(12, kid.appearance.pants_color)
     pal(15, kid.appearance.skin_color)
 
-    Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, not is_happy)
+    Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, kid.character.action ~= "happy")
 
     pal()
 
-    if not is_happy then
+    if not hide_gift_requests and kid.character.action ~= "happy" and kid.character.action ~= "before_happy" then
       Draw:draw_sprite(Draw:get_gift_sprite(kid.gift_index), kid.character.x + 4, kid.character.y - Draw:get_offset(4), 2, 2, true)
     end
   end

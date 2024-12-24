@@ -54,6 +54,6 @@ function Kid:update()
   elseif self.character.action == "before_happy" then
     self.character.x += -1
   elseif self.character.action == "possessed" then
-    self.character.x += -2
+    self.character.x += -2.5
   end
 end
