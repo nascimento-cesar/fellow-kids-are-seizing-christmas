@@ -8,7 +8,12 @@ function Kid:new()
     Draw:get_offset(11),
     2,
     2,
-    { happy = { 74, 76, 78 }, idle = { 0, 2, 4 }, possessed = { 74, 76, 78 } },
+    {
+      before_happy = { 0, 2, 4 },
+      happy = { 0, 2, 4 },
+      idle = { 0, 2, 4 },
+      possessed = { 74, 76, 78 }
+    },
     4
   )
   obj.gift_index = ceil(rnd(4))
@@ -19,11 +24,13 @@ end
 function Kid:update()
   self.character:update()
 
-  if self.character.current_action == "happy" then
-    self.character.x += 1
-  elseif self.character.current_action == "idle" then
+  if self.character.action == "idle" then
     self.character.x += -1
-  elseif self.character.current_action == "possessed" then
+  elseif self.character.action == "happy" then
+    self.character.x += 3
+  elseif self.character.action == "before_happy" then
+    self.character.x += -1
+  elseif self.character.action == "possessed" then
     self.character.x += -2
   end
 end

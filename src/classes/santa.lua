@@ -18,4 +18,8 @@ end
 
 function Santa:update(x)
   self.character:update()
+
+  if self.character.action == "throwing" and self.character.action_cycles >= 1 then
+    self.character:set_action("idle")
+  end
 end

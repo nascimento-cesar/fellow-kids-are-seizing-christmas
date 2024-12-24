@@ -4,12 +4,12 @@ function Gameplay:new(on_game_over)
   local obj = Base.new(self)
 
   obj.frames = 0
+  obj.gifted_kids = {}
   obj.gifts = {}
   obj.kids = {}
-  obj.happy_kids = {}
-  obj.score = 0
   obj.on_game_over = on_game_over
   obj.santa = Santa:new()
+  obj.score = 0
 
   return obj
 end
@@ -56,9 +56,10 @@ function Gameplay:process_inputs()
 
   if is_correct_key ~= nil then
     if is_correct_key then
-      next_kid.character:set_action("happy")
-      add(self.gifts, { gift_index = next_kid.gift_index, x = self.santa.character.x, y = self.santa.character.y })
-      add(self.happy_kids, next_kid)
+      self.santa.character:set_action("throwing")
+      next_kid.character:set_action("before_happy")
+      add(self.gifts, { kid = next_kid, x = self.santa.character.x, y = self.santa.character.y })
+      add(self.gifted_kids, next_kid)
       del(self.kids, next_kid)
     else
       next_kid.character:set_action("possessed")
@@ -76,6 +77,10 @@ end
 function Gameplay:update_gifts()
   for gift in all(self.gifts) do
     gift.x += 3
+
+    if gift.kid.character.x < gift.x then
+      gift.kid.character:set_action("happy")
+    end
   end
 end
 
@@ -84,7 +89,7 @@ function Gameplay:update_kids()
     kid:update()
   end
 
-  for kid in all(self.happy_kids) do
+  for kid in all(self.gifted_kids) do
     kid:update()
   end
 end

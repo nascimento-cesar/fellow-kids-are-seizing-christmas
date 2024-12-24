@@ -4,10 +4,10 @@ function GameplayScreen:draw(gameplay)
   Draw:draw_map()
   self:draw_health(gameplay)
   self:draw_score(gameplay)
+  self:draw_gifts(gameplay)
   self:draw_santa(gameplay)
   self:draw_kids(gameplay.kids)
-  self:draw_kids(gameplay.happy_kids)
-  self:draw_gifts(gameplay)
+  self:draw_kids(gameplay.gifted_kids)
 end
 
 function GameplayScreen:draw_health(gameplay)
@@ -18,17 +18,17 @@ end
 
 function GameplayScreen:draw_gifts(gameplay)
   for gift in all(gameplay.gifts) do
-    Draw:draw_sprite(Draw:get_gift_sprite(gift.gift_index), gift.x, gift.y, 2, 2)
+    Draw:draw_sprite(Draw:get_gift_sprite(gift.kid.gift_index), gift.x, gift.y, 2, 2)
   end
 end
 
 function GameplayScreen:draw_kids(kids)
   for kid in all(kids) do
-    local is_happy_kid = kid.character.current_action == "happy"
+    local is_happy = kid.character.action == "happy"
 
-    Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, not is_happy_kid)
+    Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, not is_happy)
 
-    if not is_happy_kid then
+    if not is_happy then
       Draw:draw_sprite(Draw:get_gift_sprite(kid.gift_index), kid.character.x + 4, kid.character.y - Draw:get_offset(4), 2, 2, true)
     end
   end
