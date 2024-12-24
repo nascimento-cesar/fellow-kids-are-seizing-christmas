@@ -26,7 +26,14 @@ function GameplayScreen:draw_kids(kids)
   for kid in all(kids) do
     local is_happy = kid.character.action == "happy"
 
+    pal(4, kid.appearance.hair_color)
+    pal(11, kid.appearance.shirt_color)
+    pal(12, kid.appearance.pants_color)
+    pal(15, kid.appearance.skin_color)
+
     Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, not is_happy)
+
+    pal()
 
     if not is_happy then
       Draw:draw_sprite(Draw:get_gift_sprite(kid.gift_index), kid.character.x + 4, kid.character.y - Draw:get_offset(4), 2, 2, true)
