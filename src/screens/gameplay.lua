@@ -9,6 +9,7 @@ function GameplayScreen:draw(gameplay)
   self:draw_santa(gameplay)
   self:draw_kids(gameplay.kids)
   self:draw_kids(gameplay.gifted_kids)
+  self:draw_next_gift(gameplay)
 end
 
 function GameplayScreen:draw_arrows(gameplay)
@@ -30,20 +31,22 @@ function GameplayScreen:draw_health(gameplay)
   end
 end
 
-function GameplayScreen:draw_kids(kids, hide_gift_requests)
+function GameplayScreen:draw_kids(kids)
   for kid in all(kids) do
     pal(4, kid.appearance.hair_color)
     pal(11, kid.appearance.shirt_color)
     pal(12, kid.appearance.pants_color)
     pal(15, kid.appearance.skin_color)
-
     Draw:draw_sprite(kid.character:get_current_sprite(), kid.character.x, kid.character.y, kid.character.w, kid.character.h, kid.character.action ~= "happy")
-
     pal()
+  end
+end
 
-    if not hide_gift_requests and kid.character.action ~= "happy" and kid.character.action ~= "before_happy" then
-      Draw:draw_sprite(Draw:get_gift_sprite(kid.gift_index), kid.character.x + 4, kid.character.y - Draw:get_offset(4), 2, 2, true)
-    end
+function GameplayScreen:draw_next_gift(gameplay)
+  local next_kid = gameplay.kids[1]
+
+  if next_kid then
+    Draw:draw_sprite(Draw:get_gift_sprite(next_kid.gift_index), 40, 40, 2, 2)
   end
 end
 
