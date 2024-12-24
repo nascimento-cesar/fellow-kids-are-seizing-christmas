@@ -58,7 +58,14 @@ function Gameplay:process_inputs()
     if is_correct_key then
       self.santa.character:set_action("throwing")
       next_kid.character:set_action("before_happy")
-      add(self.gifts, { kid = next_kid, x = self.santa.character.x, y = self.santa.character.y })
+      add(
+        self.gifts, {
+          frames = 0,
+          kid = next_kid,
+          x = self.santa.character.x + 4,
+          y = self.santa.character.y - 4
+        }
+      )
       add(self.gifted_kids, next_kid)
       del(self.kids, next_kid)
     else
@@ -76,10 +83,15 @@ end
 
 function Gameplay:update_gifts()
   for gift in all(self.gifts) do
-    gift.x += 3
+    gift.frames += 1
 
-    if gift.kid.character.x < gift.x then
-      gift.kid.character:set_action("happy")
+    if gift.frames >= 5 then
+      gift.x += 3
+
+      if gift.kid.character.x < gift.x and gift.kid.character.action ~= "happy" then
+        gift.kid.character.animation_speed = 2
+        gift.kid.character:set_action("happy")
+      end
     end
   end
 end
