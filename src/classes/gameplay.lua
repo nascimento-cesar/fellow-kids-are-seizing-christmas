@@ -56,6 +56,7 @@ function Gameplay:process_inputs()
 
   if is_correct_key ~= nil then
     if is_correct_key then
+      self.score += 1
       self.santa.character:set_action("throwing")
       next_kid.character:set_action(next_kid.character.action == "possessed" and "before_happy_possessed" or "before_happy")
       add(

@@ -7,6 +7,8 @@ function Game:new()
   obj.frames = 0
   obj.gameplay = nil
   obj.gameplay_history = {}
+  obj.high_score = 0
+  obj.is_new_high_score = false
   obj.start_screen = {
     kids = {}
   }
@@ -34,6 +36,7 @@ function Game:on_start()
     add(self.gameplay_history, self.gameplay)
     self.start_screen.kids = {}
     self.current_mode = "gameplay"
+    self.is_new_high_score = false
   end
 
   if self.frames == 1 or self.frames % 30 == 0 then
@@ -55,6 +58,11 @@ function Game:on_gameplay()
 end
 
 function Game:on_game_over()
+  if self.gameplay.score > self.high_score then
+    self.high_score = self.gameplay.score
+    self.is_new_high_score = true
+  end
+
   if btnp(❎) or btnp(🅾️) then
     self.current_mode = "start"
   end
